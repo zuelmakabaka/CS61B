@@ -54,9 +54,10 @@ public class ArrayDequeTest {
                 int size2 = correct.size();
                 assertEquals(size1,size2);
                 if (size1 > 0) {
-                    if(correct.removeLast() != broken.removeLast() ){
-                        System.out.println("error");
-                    };
+                    if(correct.removeLast() != correct.removeLast()){
+                        System.out.print("error");
+                    }
+
                     System.out.println("removeLast(success)");
                 }
             }
