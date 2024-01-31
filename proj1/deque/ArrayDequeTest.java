@@ -43,7 +43,7 @@ public class ArrayDequeTest {
             } else if (operationNumber == 1) {
                 // size
                 int size1 = correct.size();
-                int size2 = correct.size();
+                int size2 = broken.size();
                 assertEquals(size1,size2);
                 System.out.println("size: " + size1);
                 System.out.println("size: " + size2);
@@ -51,14 +51,16 @@ public class ArrayDequeTest {
 
             else if (operationNumber == 3) {
                 int size1 = correct.size();
-                int size2 = correct.size();
+                int size2 = broken.size();
                 assertEquals(size1,size2);
                 if (size1 > 0) {
-                    if(correct.removeLast() != correct.removeLast()){
+                    /*if(correct.removeLast() != broken.removeLast()){
                         System.out.print("error");
-                    }
-
-                    System.out.println("removeLast(success)");
+                    }*/
+                    int x = correct.removeLast();
+                    int y = broken.removeLast();
+                    assertEquals(x,y);
+                    System.out.println("removeLast("+x+")");
                 }
             }
         }
