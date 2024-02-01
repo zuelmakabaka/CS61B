@@ -111,10 +111,31 @@ public class ArrayDeque<T> {
         return items[nextFirst];
     }
     public T get(int index){
-        if (index < 0 || index > size - 1) {
-            return null;
+        int first;
+        if(nextFirst == items.length - 1){
+            first = 0;
         }
-        int itemIndex = nextFirst + 1 + index;
-        return items[itemIndex];
+        else{
+            first = nextFirst + 1;
+        }
+        int last;
+        if(nextLast == 0){
+            last = items.length - 1;
+        }
+        else{
+            last = nextLast - 1;
+        }
+        if(first < last){
+            return items[first + index];
+        }
+        else{
+            if(index < items.length - first){
+                return items[first + index];
+            }
+            else{
+                return items[index - items.length + first];
+            }
+        }
+
     }
 }
