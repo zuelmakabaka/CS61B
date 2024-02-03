@@ -37,8 +37,8 @@ public class ArrayDequeTest {
             if (operationNumber == 0) {
                 // addLast
                 int randVal = StdRandom.uniform(0, 100);
-                correct.addLast(randVal);
-                broken.addLast(randVal);
+                correct.addFirst(randVal);
+                broken.addFirst(randVal);
                 System.out.println("addLast(" + randVal + ")");
             } else if (operationNumber == 1) {
                 // size
@@ -48,7 +48,15 @@ public class ArrayDequeTest {
                 System.out.println("size: " + size1);
                 System.out.println("size: " + size2);
             }
-
+            else if (operationNumber == 2) {
+                int size1 = correct.size();
+                int size2 = broken.size();
+                assertEquals(size1, size2);
+                int x = correct.get(0);
+                int y = broken.get(0);
+                assertEquals(x, y);
+                System.out.print("equal");
+            }
             else if (operationNumber == 3) {
                 int size1 = correct.size();
                 int size2 = broken.size();
