@@ -7,12 +7,12 @@ import java.util.Set;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
 
-    int size = 0;
-    BSTnode root = null;
-    public BSTMap() {
+    private int size = 0;
+    private BSTnode root = null;
+    BSTMap() {
 
     };
-    public class BSTnode{
+    private class BSTnode{
         private K key;
         private V value;
         private BSTnode left;
@@ -109,4 +109,5 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
     public Iterator<K> iterator() {
         throw new UnsupportedOperationException();
     }
+    public void printInOrder(){}
 }
