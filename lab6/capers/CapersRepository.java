@@ -35,7 +35,7 @@ public class CapersRepository {
     public static void setupPersistence() throws IOException {
         CAPERS_FOLDER.mkdir();
         Story.createNewFile();
-        d.mkdir();
+        Dog.DOG_FOLDER.mkdir();
     }
 
     /**
