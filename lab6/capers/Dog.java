@@ -12,7 +12,7 @@ public class Dog implements Serializable{ // TODO
 
     /** Folder that dogs live in. */
     static final File DOG_FOLDER = Utils.join(".capers", "dogs");
-
+    File d = new File(".capers\\dogs");
 
     /** Age of dog. */
     private int age;
@@ -58,9 +58,10 @@ public class Dog implements Serializable{ // TODO
     /**
      * Saves a dog to a file for future use.
      */
-    public void saveDog() {
+    public void saveDog() throws IOException {
         // TODO (hint: don't forget dog names are unique)
         File any_dog = Utils.join(DOG_FOLDER,this.name);
+        any_dog.createNewFile();
         Utils.writeObject(any_dog,this);
     }
 
