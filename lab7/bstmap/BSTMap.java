@@ -107,7 +107,20 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
         throw new UnsupportedOperationException();
     }
     public Iterator<K> iterator() {
-        throw new UnsupportedOperationException();
+        return new iterator();
+    }
+    private class iterator implements Iterator<K>{
+        BSTnode last = root;
+        @Override
+        public boolean hasNext() {
+            return true;
+        }
+
+        @Override
+        public K next(){
+            throw new UnsupportedOperationException();
+        }
+
     }
     public void printInOrder(){}
 }
