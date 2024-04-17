@@ -173,8 +173,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return null;
     }
     @Override
-    public Iterator iterator(){
-        return createBucket().iterator();
+    public Iterator<K> iterator(){
+        return (Iterator<K>) createBucket().iterator();
     }
     @Override
     public V remove(K key){
