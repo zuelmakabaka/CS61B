@@ -31,6 +31,8 @@ public class Commit implements Serializable {
     private Date timestamp;
     private String parentID1;
     private String parentID2 = null;
+    public String[] children;
+    public int index;
 
     public TreeMap<String, String> Commitcontents = new TreeMap<>();//文件名，文件id
 
@@ -40,6 +42,8 @@ public class Commit implements Serializable {
         this.parentID2 = null;
         this.timestamp = new Date(0);
         this.message = "initial commit";
+        this.children = null;
+        this.index = 0;
     }
 
     public Commit(String message,String parentID1, String parentID2){
@@ -47,6 +51,8 @@ public class Commit implements Serializable {
         this.parentID1 = parentID1;
         this.parentID2 = parentID2;
         this.timestamp = new Date();
+        this.children = null;
+        this.index = 0;
     }
 
     public String getMessage(){

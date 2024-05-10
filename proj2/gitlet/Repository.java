@@ -123,9 +123,14 @@ public class Repository {
                 addcommit.Commitcontents.remove(one_in_remove);
                 to_remove.delete();
             }
+            String this_id = sha1(serialize(addcommit));
+            File parentfile = join(Commits,addcommit.getParentID1());
+            Commit parent = readObject(parentfile, Commit.class);
+            parent.children[parent.index] = this_id;
+            parent.index += 1;
+            writeObject(parentfile,parent);
             File newcommitfile = join(Commits, sha1(serialize(addcommit)));//新commit的dir
             writeObject(newcommitfile, addcommit);//将添加的commit写回文件
-            String this_id = sha1(serialize(addcommit));
             //更新Head指针
             writeObject(Headfile,addcommit);
             String branch_name = readContentsAsString(nowbranch);
@@ -409,5 +414,58 @@ public class Repository {
         }else {
             System.out.println("No commit with that id exists.");
         }
+    }
+    public static void merge(String branch_name) {
+        File branch_commit_file = join(Branches, branch_name);
+        Commit branch_commit = readObject(branch_commit_file, Commit.class);
+        File now_branch_commit_file = join(Branches, readContentsAsString(nowbranch));
+        Commit now_branch_commit = readObject(now_branch_commit_file, Commit.class);
+        Commit traverse_branch = readObject(branch_commit_file, Commit.class);
+        while (traverse_branch.getParentID1() != null) {
+            if(sha1(serialize(traverse_branch)).equals(sha1(serialize(now_branch_commit)))){
+                git_checkout(branch_name);
+                System.out.println("Current branch fast-forwarded.");
+            }
+            CommitFilemap = readObject(CommitFilemapFile, TreeMap.class);
+            File parentfile1 = CommitFilemap.get(traverse_branch.getParentID1());
+            if (parentfile1 != null) {
+                traverse_branch = readObject(parentfile1, Commit.class);
+            }
+        }
+        Commit traverse_nowbranch = readObject(now_branch_commit_file, Commit.class);
+        while (traverse_nowbranch.getParentID1() != null) {
+            if(sha1(serialize(traverse_nowbranch)).equals(sha1(serialize(branch_commit)))){
+                System.out.println("Given branch is an ancestor of the current branch.");
+            }
+            CommitFilemap = readObject(CommitFilemapFile, TreeMap.class);
+            File parentfile2 = CommitFilemap.get(traverse_nowbranch.getParentID1());
+            if (parentfile2 != null) {
+                traverse_nowbranch = readObject(parentfile2, Commit.class);
+            }
+        }
+        File init_commit_file = join(Commits,"initial_commit");
+        Commit init_commit = readObject(init_commit_file, Commit.class);
+
+
+
+    }
+    public static String find_first_ancestor(String init_commit_id,String id1,String id2){
+        File init_commit_file = join(Commits,init_commit_id);
+        Commit init_commit = readObject(init_commit_file, Commit.class);
+        Commit traverse = readObject(init_commit_file, Commit.class);
+        boolean a= false;
+        boolean b= false;
+        for(String childid: traverse.children){
+                if(find_first_ancestor(childid,id1,id2).equals(id1)){
+                    a = true;
+                }
+                if(find_first_ancestor(childid,id1,id2).equals(id2)){
+                    b = true;
+                }
+                if(a || b ){
+                    return init_commit_id;
+                }
+        }
+        return "no";
     }
 }
